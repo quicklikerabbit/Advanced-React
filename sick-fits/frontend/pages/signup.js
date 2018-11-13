@@ -1,6 +1,7 @@
 import SignUp from "../components/Signup";
 import Signin from "../components/Signin";
-import styled from 'styled-components';
+import RequestReset from "../components/RequestReset";
+import styled from "styled-components";
 
 const Columns = styled.div`
   display: grid;
@@ -13,6 +14,7 @@ const SignUpPage = () => {
     <Columns>
       <SignUp />
       <Signin />
+      <RequestReset />
     </Columns>
   );
 };
