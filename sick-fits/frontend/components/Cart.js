@@ -10,6 +10,7 @@ import SickButton from "./styles/SickButton";
 import CartItem from "./CartItem";
 import formatMoney from "../lib/formatMoney";
 import calcTotalPrice from "../lib/calcTotalPrice";
+import TakeMyMoney from "./TakeMyMoney";
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -24,16 +25,18 @@ const TOGGLE_CART_MUTATION = gql`
 `;
 
 const Composed = adopt({
-  user: ({render}) => <User>{render}</User>,
-  toggleCart: ({render}) => <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>,
-  localState: ({render}) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>
+  user: ({ render }) => <User>{render}</User>,
+  toggleCart: ({ render }) => (
+    <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>
+  ),
+  localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>
 });
 
 const Cart = () => (
   <Composed>
     {({ user, toggleCart, localState }) => {
-      if (!me) return null;
       const me = user.data.me;
+      if (!me) return null;
       return (
         <CartStyles open={localState.data.cartOpen}>
           <header>
@@ -53,7 +56,9 @@ const Cart = () => (
           </ul>
           <footer>
             <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-            <SickButton>Checkout</SickButton>
+            <TakeMyMoney>
+              <SickButton>Checkout</SickButton>
+            </TakeMyMoney>
           </footer>
         </CartStyles>
       );
