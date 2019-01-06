@@ -29,9 +29,7 @@ class RemoveFromCart extends Component {
   };
 
   update = (cache, payload) => {
-    console.log("Running Remove from cart update fn");
     const data = cache.readQuery({ query: CURRENT_USER_QUERY });
-    console.log(data);
     const cartItemId = payload.data.removeFromCart.id;
     data.me.cart = data.me.cart.filter(cartItem => cartItem.id !== cartItemId);
     cache.writeQuery({ query: CURRENT_USER_QUERY, data });
@@ -66,3 +64,4 @@ class RemoveFromCart extends Component {
 }
 
 export default RemoveFromCart;
+export { REMOVE_FROM_CART_MUTATION };
